@@ -12,3 +12,4 @@ C:\Work\123\obj\Debug\net9.0\refint\123.dll
 C:\Work\123\obj\Debug\net9.0\123.pdb
 C:\Work\123\obj\Debug\net9.0\123.genruntimeconfig.cache
 C:\Work\123\obj\Debug\net9.0\ref\123.dll
+C:\Work\123\obj\Debug\net9.0\123.sourcelink.json
