@@ -1,54 +1,132 @@
-﻿// See https://aka.ms/new-console-template for more information
-/*string[] fraudulentOrderIDs = new string[3];
+﻿/* 
+This C# console application is designed to:
+- Use arrays to store student names and assignment scores.
+- Use a `foreach` statement to iterate through the student names as an outer program loop.
+- Use an `if` statement within the outer loop to identify the current student name and access that student's assignment scores.
+- Use a `foreach` statement within the outer loop to iterate though the assignment scores array and sum the values.
+- Use an algorithm within the outer loop to calculate the average exam score for each student.
+- Use an `if-elseif-else` construct within the outer loop to evaluate the average exam score and assign a letter grade automatically.
+- Integrate extra credit scores when calculating the student's final score and letter grade as follows:
+    - detects extra credit assignments based on the number of elements in the student's scores array.
+    - divides the values of extra credit assignments by 10 before adding extra credit scores to the sum of exam scores.
+- use the following report format to report student grades: 
 
-fraudulentOrderIDs[0] = "A123";
-fraudulentOrderIDs[1] = "B456";
-fraudulentOrderIDs[2] = "C789";
-//fraudulentOrderIDs[3] = "D000";*/
+    Student         Grade
 
-/*string[] fraudulentOrderIDs = [ "A123", "B456", "C789" ];
+    Sophia:         92.2    A-
+    Andrew:         89.6    B+
+    Emma:           85.6    B
+    Logan:          91.2    A-
+*/
+int examAssignments = 5;
 
-Console.WriteLine($"First: {fraudulentOrderIDs[0]}");
-Console.WriteLine($"Second: {fraudulentOrderIDs[1]}");
-Console.WriteLine($"Third: {fraudulentOrderIDs[2]}");
+string[] studentNames = new string[] { "Sophia", "Andrew", "Emma", "Logan" };
 
-fraudulentOrderIDs[0] = "F000";
+int[] sophiaScores = new int[] { 90, 86, 87, 98, 100, 94, 90 };
+int[] andrewScores = new int[] { 92, 89, 81, 96, 90, 89 };
+int[] emmaScores = new int[] { 90, 85, 87, 98, 68, 89, 89, 89 };
+int[] loganScores = new int[] { 90, 95, 87, 88, 96, 96 };
 
-Console.WriteLine($"Reassign First: {fraudulentOrderIDs[0]}");
+int[] studentScores = new int[10];
 
-Console.WriteLine($"There are {fraudulentOrderIDs.Length} fraudulent orders to process");*/
+string currentStudentLetterGrade = "";
 
+// display the header row for scores/grades
+Console.Clear();
+Console.WriteLine("Student\t\tGrade\tLetter Grade\n");
 
-
-/*string[] names = { "Rowena", "Robin", "Bao" };
-foreach (string name in names)
+/*
+The outer foreach loop is used to:
+- iterate through student names 
+- assign a student's grades to the studentScores array
+- sum assignment scores (inner foreach loop)
+- calculate numeric and letter grade
+- write the score report information
+*/
+foreach (string name in studentNames)
 {
-    Console.WriteLine(name);
-}*/
+    string currentStudent = name;
 
+    if (currentStudent == "Sophia")
+        studentScores = sophiaScores;
 
+    else if (currentStudent == "Andrew")
+        studentScores = andrewScores;
 
-/*int[] inventory = [200, 450, 700, 175, 250];
-int sum = 0;
-int bin = 0;
+    else if (currentStudent == "Emma")
+        studentScores = emmaScores;
 
-foreach (int items in inventory)
-{
-    sum += items;
-    bin++;
-    Console.WriteLine($"Bin {bin} = {items} items (Running total: {sum})");
-}
+    else if (currentStudent == "Logan")
+        studentScores = loganScores;
 
-Console.WriteLine($"We have {sum} item in inventory");*/
+    int sumAssignmentScores = 0;
 
+    decimal currentStudentGrade = 0;
 
+    int gradedAssignments = 0;
 
-string[] numbersOrder = ["B123", "C234", "A345", "C15", "B177", "G3003", "C235", "B179"];
-
-foreach (string order in numbersOrder)
-{
-    if (order.StartsWith("B"))
+    /* 
+    the inner foreach loop sums assignment scores
+    extra credit assignments are worth 10% of an exam score
+    */
+    foreach (int score in studentScores)
     {
-        Console.WriteLine($"The {order} starts with 'B'!");
+        gradedAssignments += 1;
+
+        if (gradedAssignments <= examAssignments)
+            sumAssignmentScores += score;
+
+        else
+            sumAssignmentScores += score / 10;
     }
+
+    currentStudentGrade = (decimal)(sumAssignmentScores) / examAssignments;
+
+    if (currentStudentGrade >= 97)
+        currentStudentLetterGrade = "A+";
+
+    else if (currentStudentGrade >= 93)
+        currentStudentLetterGrade = "A";
+
+    else if (currentStudentGrade >= 90)
+        currentStudentLetterGrade = "A-";
+
+    else if (currentStudentGrade >= 87)
+        currentStudentLetterGrade = "B+";
+
+    else if (currentStudentGrade >= 83)
+        currentStudentLetterGrade = "B";
+
+    else if (currentStudentGrade >= 80)
+        currentStudentLetterGrade = "B-";
+
+    else if (currentStudentGrade >= 77)
+        currentStudentLetterGrade = "C+";
+
+    else if (currentStudentGrade >= 73)
+        currentStudentLetterGrade = "C";
+
+    else if (currentStudentGrade >= 70)
+        currentStudentLetterGrade = "C-";
+
+    else if (currentStudentGrade >= 67)
+        currentStudentLetterGrade = "D+";
+
+    else if (currentStudentGrade >= 63)
+        currentStudentLetterGrade = "D";
+
+    else if (currentStudentGrade >= 60)
+        currentStudentLetterGrade = "D-";
+
+    else
+        currentStudentLetterGrade = "F";
+
+    // Student         Grade
+    // Sophia:         92.2    A-
+    
+    Console.WriteLine($"{currentStudent}\t\t{currentStudentGrade}\t{currentStudentLetterGrade}");
 }
+
+// required for running in VS Code (keeps the Output windows open to view results)
+Console.WriteLine("\n\rPress the Enter key to continue");
+Console.ReadLine();
