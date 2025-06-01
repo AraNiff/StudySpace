@@ -33,7 +33,7 @@ string currentStudentLetterGrade = "";
 
 // display the header row for scores/grades
 Console.Clear();
-Console.WriteLine("Student\t\tGrade\tLetter Grade\n");
+Console.WriteLine("Student\t\tExam Score\tOverall Grade\tExtra Credit\n");
 
 /*
 The outer foreach loop is used to:
@@ -64,6 +64,11 @@ foreach (string name in studentNames)
     decimal currentStudentGrade = 0;
 
     int gradedAssignments = 0;
+    int gradedAssignmentsExtraCredit = 0;
+
+    decimal sumAssignmentScoresExtra = 0;
+    decimal currentStudentExtraScore = 0;
+    decimal currentStudentExamScore = 0;
 
     /* 
     the inner foreach loop sums assignment scores
@@ -75,12 +80,17 @@ foreach (string name in studentNames)
 
         if (gradedAssignments <= examAssignments)
             sumAssignmentScores += score;
-
         else
-            sumAssignmentScores += score / 10;
+        {
+            gradedAssignmentsExtraCredit++;
+            sumAssignmentScoresExtra += score;
+        }
     }
 
-    currentStudentGrade = (decimal)(sumAssignmentScores) / examAssignments;
+    currentStudentExtraScore = (decimal)sumAssignmentScoresExtra / gradedAssignmentsExtraCredit; 
+    currentStudentExamScore = (decimal)(sumAssignmentScores) / examAssignments;
+
+    currentStudentGrade = (decimal)((decimal)sumAssignmentScores + ((decimal)sumAssignmentScoresExtra / 10)) / examAssignments;
 
     if (currentStudentGrade >= 97)
         currentStudentLetterGrade = "A+";
@@ -123,8 +133,8 @@ foreach (string name in studentNames)
 
     // Student         Grade
     // Sophia:         92.2    A-
-    
-    Console.WriteLine($"{currentStudent}\t\t{currentStudentGrade}\t{currentStudentLetterGrade}");
+
+    Console.WriteLine($"{currentStudent}\t\t{currentStudentExamScore}\t\t{currentStudentGrade}\t{currentStudentLetterGrade}\t{currentStudentExtraScore} ({((decimal)sumAssignmentScoresExtra / 10) / examAssignments} pts)");
 }
 
 // required for running in VS Code (keeps the Output windows open to view results)
